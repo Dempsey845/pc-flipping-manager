@@ -54,8 +54,10 @@ function BuildsHeader({
   windowWidth,
 }) {
   return (
-    <div className="builds-header flex justify-between bg-white p-3 items-center rounded-lg">
-      <h1 className="font-bold">Your builds</h1>
+    <div
+      className={`builds-header flex w-full justify-between bg-white p-3 items-center rounded-lg`}
+    >
+      <h1 className="font-bold pr-5">Your builds</h1>
       <div className="flex right-side">
         {windowWidth >= 640 && (
           <div className="flex gap-2 mx-2">
@@ -147,7 +149,7 @@ export default function Builds() {
   }, [windowWidth]);
 
   const listViewStyle =
-    "flex flex-col items-center justify-center w-full gap-3";
+    "flex flex-col items-center justify-center w-full gap-3 max-w-156";
   const gridViewStyle =
     "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3";
 
@@ -162,7 +164,7 @@ export default function Builds() {
       {showMoreModal && (
         <MoreModal setShowModal={setShowMoreModal} targetBuild={targetBuild} />
       )}
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 justify-center items-center">
         <BuildsHeader
           searchInput={searchInput}
           setSearchInput={setSearchInput}

@@ -7,12 +7,12 @@ export default function Build({
   setShowMoreModal,
   setTargetBuild,
 }) {
-  const listViewStyle = "flex max-h-64 bg-white rounded-2xl shadow-lg";
+  const listViewStyle = "flex bg-white rounded-2xl shadow-lg";
   const gridViewStyle = "flex flex-col max-w-64";
 
   return (
     <div
-      className={`build items-center w-fit ${
+      className={`build items-center justify-between w-fit ${
         listView ? listViewStyle : gridViewStyle
       } ${windowWidth < 640 && "w-full"} p-3 gap-5`}
     >

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   BarChart,
   Bar,
@@ -44,7 +45,7 @@ const statistics = [
     value: "5",
   },
   {
-    title: "Avg. Sale Duration",
+    title: "Avg. Days To Sell",
     value: "15 days",
   },
 ];
@@ -79,6 +80,8 @@ function AnalyticsHeader() {
 }
 
 export default function Analytics() {
+  const [revenueTrend, setRevenueTrend] = useState(false);
+
   return (
     <div className="flex flex-col gap-5">
       <AnalyticsHeader />
@@ -106,7 +109,10 @@ export default function Analytics() {
 
         {/* Revenue Trend Line Chart */}
         <div className="bg-white p-4 rounded-lg shadow-sm">
-          <h2 className="font-semibold mb-2">Revenue Trend</h2>
+          <h2 className="font-semibold mb-2">
+            {revenueTrend ? "Revenue" : "Profit"} Trend
+          </h2>
+
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -115,13 +121,31 @@ export default function Analytics() {
               <Tooltip />
               <Line
                 type="monotone"
-                dataKey="revenue"
-                stroke="#0096FF"
+                dataKey={revenueTrend ? "revenue" : "profit"}
+                stroke={revenueTrend ? "#0096FF" : "#00C49F"}
                 strokeWidth={2}
                 dot={{ r: 4 }}
               />
             </LineChart>
           </ResponsiveContainer>
+          <div className="w-full flex justify-center items-center gap-2">
+            <button
+              onClick={() => setRevenueTrend(true)}
+              className={`btn ${
+                revenueTrend ? "btn-primary" : "btn-secondary"
+              }`}
+            >
+              Revenue
+            </button>
+            <button
+              onClick={() => setRevenueTrend(false)}
+              className={`btn ${
+                !revenueTrend ? "btn-primary" : "btn-secondary"
+              }`}
+            >
+              Profit
+            </button>
+          </div>
         </div>
 
         {/* Revenue vs Profit Bar Chart */}

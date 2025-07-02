@@ -1,4 +1,38 @@
+import { useState } from "react";
 import BuildOptions from "./BuildOptions";
+import { formatEpochToDayMonth } from "../helpers/epoch";
+
+function BuildImage({ build, listView, setTargetBuild, setShowMoreModal }) {
+  const [hovered, setHovered] = useState(false);
+  const imageGridViewStyle = "hover:opacity-80";
+
+  return (
+    <div
+      onMouseOver={() => setHovered(true)}
+      onMouseOut={() => setHovered(false)}
+      className="build-img relative"
+    >
+      <img
+        className={`w-20 h-20 sm:w-48 sm:h-48 rounded-xl bg-blue-800 shadow object-cover ${
+          !listView && imageGridViewStyle
+        }`}
+        src={build.imageSrc}
+      />
+
+      {hovered && !listView && (
+        <button
+          onClick={() => {
+            setTargetBuild(build);
+            setShowMoreModal(true);
+          }}
+          className="btn btn-secondary absolute top-1 right-1"
+        >
+          ...
+        </button>
+      )}
+    </div>
+  );
+}
 
 export default function Build({
   build,
@@ -10,16 +44,20 @@ export default function Build({
   const listViewStyle = "flex bg-white rounded-2xl shadow-lg";
   const gridViewStyle = "flex flex-col max-w-64";
 
+  const dayMonth = formatEpochToDayMonth(build.listDate);
+
   return (
     <div
       className={`build items-center justify-between w-fit ${
         listView ? listViewStyle : gridViewStyle
       } ${windowWidth < 640 && "w-full"} p-3 gap-5`}
     >
-      <img
-        className={`build-img w-20 h-20 sm:w-48 sm:h-48 rounded-xl shadow`}
-        src={build.imageSrc}
-      ></img>
+      <BuildImage
+        build={build}
+        listView={listView}
+        setShowMoreModal={setShowMoreModal}
+        setTargetBuild={setTargetBuild}
+      />
       <div className="flex flex-col text-xs sm:text-base">
         <h3 className="build-title font-medium text-sm sm:text-lg">
           {build.title}
@@ -28,7 +66,7 @@ export default function Build({
         <div className="flex gap-1 font-light">
           <p className="status note">{build.status}</p>
           <p> • </p>
-          <p className="list-date note">Listed on {build.listDate}</p>
+          <p className="list-date note">Listed on {dayMonth}</p>
         </div>
         <p className="days-since-listed note">15 days since listed</p>
         {listView && windowWidth >= 640 && (

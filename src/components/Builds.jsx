@@ -1,50 +1,7 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Build from "./Build";
 import BuildOptions from "./BuildOptions";
-
-const testBuild = {
-  title: "Custom Gaming PC | Ryzen 5 | GTX 1070 | 16GB DDR4 | 1TB",
-  price: 415,
-  status: "For sale",
-  listDate: 1751923845,
-  imageSrc:
-    "https://scontent-man2-1.xx.fbcdn.net/v/t45.5328-4/498714416_1396967997920745_3329994914885161320_n.jpg?stp=dst-jpg_p960x960_tt6&_nc_cat=105&ccb=1-7&_nc_sid=247b10&_nc_ohc=9ig94iC6KGIQ7kNvwEjNfvi&_nc_oc=AdkQvZq7ram7FEA-39bxlyv-q9ePh_yOnSkZm-Dhsh1CWhS8B6lv4PC-4Hv-nHLjwXE&_nc_zt=23&_nc_ht=scontent-man2-1.xx&_nc_gid=BZSCNvOhJq-f07EJ3_SZCA&oh=00_AfMAjSFirBCobwZSyAuwj5wq6V_zt61zxQEd_Qavk_7mUA&oe=6865A426",
-};
-
-const testBuild2 = {
-  title: "Custom Gaming PC | Ryzen 7 | GTX 1080ti | 16GB DDR4 | 1TB",
-  price: 600,
-  status: "For sale",
-  listDate: 1751278023,
-  imageSrc:
-    "https://scontent-man2-1.xx.fbcdn.net/v/t45.5328-4/498714416_1396967997920745_3329994914885161320_n.jpg?stp=dst-jpg_p960x960_tt6&_nc_cat=105&ccb=1-7&_nc_sid=247b10&_nc_ohc=9ig94iC6KGIQ7kNvwEjNfvi&_nc_oc=AdkQvZq7ram7FEA-39bxlyv-q9ePh_yOnSkZm-Dhsh1CWhS8B6lv4PC-4Hv-nHLjwXE&_nc_zt=23&_nc_ht=scontent-man2-1.xx&_nc_gid=BZSCNvOhJq-f07EJ3_SZCA&oh=00_AfMAjSFirBCobwZSyAuwj5wq6V_zt61zxQEd_Qavk_7mUA&oe=6865A426",
-};
-
-const testBuild3 = {
-  title: "Custom Gaming PC | Ryzen 3 | RTX 2060 | 16GB DDR4 | 1TB",
-  price: 300,
-  status: "Sold",
-  listDate: 1752309501,
-  imageSrc:
-    "https://scontent-man2-1.xx.fbcdn.net/v/t45.5328-4/498714416_1396967997920745_3329994914885161320_n.jpg?stp=dst-jpg_p960x960_tt6&_nc_cat=105&ccb=1-7&_nc_sid=247b10&_nc_ohc=9ig94iC6KGIQ7kNvwEjNfvi&_nc_oc=AdkQvZq7ram7FEA-39bxlyv-q9ePh_yOnSkZm-Dhsh1CWhS8B6lv4PC-4Hv-nHLjwXE&_nc_zt=23&_nc_ht=scontent-man2-1.xx&_nc_gid=BZSCNvOhJq-f07EJ3_SZCA&oh=00_AfMAjSFirBCobwZSyAuwj5wq6V_zt61zxQEd_Qavk_7mUA&oe=6865A426",
-};
-
-const testBuild4 = {
-  title: "Budget Build | i5 | RX 580 | 8GB DDR4 | 512GB SSD",
-  price: 320,
-  status: "Sold",
-  listDate: 1753047122,
-  imageSrc:
-    "https://scontent-man2-1.xx.fbcdn.net/v/t45.5328-4/498714416_1396967997920745_3329994914885161320_n.jpg?stp=dst-jpg_p960x960_tt6&_nc_cat=105&ccb=1-7&_nc_sid=247b10&_nc_ohc=9ig94iC6KGIQ7kNvwEjNfvi&_nc_oc=AdkQvZq7ram7FEA-39bxlyv-q9ePh_yOnSkZm-Dhsh1CWhS8B6lv4PC-4Hv-nHLjwXE&_nc_zt=23&_nc_ht=scontent-man2-1.xx&_nc_gid=BZSCNvOhJq-f07EJ3_SZCA&oh=00_AfMAjSFirBCobwZSyAuwj5wq6V_zt61zxQEd_Qavk_7mUA&oe=6865A426",
-};
-
-const testBuild5 = {
-  title: "High-End Build | Ryzen 7 | RTX 3070 | 32GB DDR4 | 2TB NVMe",
-  price: 950,
-  status: "For sale",
-  listDate: 1753684810,
-  imageSrc: "your-image-url.jpg",
-};
+import { getTimeDifferenceString } from "../helpers/epoch";
 
 function BuildsHeader({
   searchInput,
@@ -133,7 +90,7 @@ function MoreModal({ setShowModal, targetBuild }) {
   );
 }
 
-export default function Builds() {
+export default function Builds({ builds, setBuilds }) {
   const [listView, setListView] = useState(false);
   const [searchInput, setSearchInput] = useState("");
 
@@ -143,6 +100,8 @@ export default function Builds() {
   const { windowWidth, windowHeight } = useWindowSize();
 
   const [wasGrid, setWasGrid] = useState(false);
+
+  const [filteredBuilds, setFilteredBuilds] = useState([]);
 
   useEffect(() => {
     if (windowWidth < 640) {
@@ -154,16 +113,18 @@ export default function Builds() {
     }
   }, [windowWidth]);
 
+  useEffect(() => {
+    setFilteredBuilds(
+      builds.filter((build) =>
+        build.title.toLowerCase().includes(searchInput.toLowerCase())
+      )
+    );
+  }, [searchInput, builds]);
+
   const listViewStyle =
     "flex flex-col items-center justify-center w-full gap-3 max-w-156";
   const gridViewStyle =
     "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 items-baseline justify-center";
-
-  const allBuilds = [testBuild, testBuild2, testBuild3, testBuild4, testBuild5];
-
-  const filteredBuilds = allBuilds.filter((build) =>
-    build.title.toLowerCase().includes(searchInput.toLowerCase())
-  );
 
   return (
     <>
@@ -180,11 +141,11 @@ export default function Builds() {
         />
 
         <div className={`builds ${listView ? listViewStyle : gridViewStyle}`}>
-          {filteredBuilds.length > 0 ? (
-            filteredBuilds.map((build, index) => (
+          {filteredBuilds && filteredBuilds.length > 0 ? (
+            filteredBuilds.map((build) => (
               <Build
-                key={index}
-                id={build.price + index}
+                key={build.id}
+                id={build.id}
                 build={build}
                 listView={listView}
                 windowWidth={windowWidth}

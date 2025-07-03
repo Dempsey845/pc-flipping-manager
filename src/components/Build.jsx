@@ -1,6 +1,6 @@
 import { useState } from "react";
 import BuildOptions from "./BuildOptions";
-import { formatEpochToDayMonth } from "../helpers/epoch";
+import { formatEpochToDayMonth, getDaysSinceEpoch } from "../helpers/epoch";
 
 function BuildImage({ build, listView, setTargetBuild, setShowMoreModal }) {
   const [hovered, setHovered] = useState(false);
@@ -45,6 +45,7 @@ export default function Build({
   const gridViewStyle = "flex flex-col max-w-64";
 
   const dayMonth = formatEpochToDayMonth(build.listDate);
+  const daysSinceListed = getDaysSinceEpoch(build.listDate);
 
   return (
     <div
@@ -68,7 +69,11 @@ export default function Build({
           <p> • </p>
           <p className="list-date note">Listed on {dayMonth}</p>
         </div>
-        <p className="days-since-listed note">15 days since listed</p>
+        <p className="days-since-listed note">
+          {build.status == "Sold"
+            ? `Took ${build.timeSinceSold.string} to sell`
+            : `${daysSinceListed} days since listed`}
+        </p>
         {listView && windowWidth >= 640 && (
           <div className="flex justify-between gap-3">
             <BuildOptions buildStatus={build.status} />

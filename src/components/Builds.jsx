@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Build from "./Build";
 import BuildOptions from "./BuildOptions";
 import { getTimeDifferenceString } from "../helpers/epoch";
+import AddBuild from "./AddBuild";
 
 function BuildsHeader({
   searchInput,
@@ -36,6 +37,7 @@ function BuildsHeader({
             </button>
           </div>
         )}
+        <button className={`add-build btn btn-primary-2`}>Add Build</button>
         <div className="flex search-bar bg-gray-200 rounded-full p-2">
           <input
             onChange={(e) => setSearchInput(e.target.value)}
@@ -131,6 +133,7 @@ export default function Builds({ builds, setBuilds }) {
       {showMoreModal && (
         <MoreModal setShowModal={setShowMoreModal} targetBuild={targetBuild} />
       )}
+      <AddBuild />
       <div className="flex flex-col gap-5 justify-center items-center">
         <BuildsHeader
           searchInput={searchInput}

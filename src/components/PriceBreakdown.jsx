@@ -15,11 +15,14 @@ const DEFAULT_BREAKDOWN = [
 const formatCurrency = (value) =>
   isNaN(value) ? "" : `£${Number(value).toFixed(2)}`;
 
-export default function PriceBreakdown() {
+export default function PriceBreakdown({
+  sellPrice,
+  setSellPrice,
+  totalCost,
+  setTotalCost,
+}) {
   const [isEnabled, setIsEnabled] = useState(false);
   const [priceBreakdown, setPriceBreakdown] = useState([...DEFAULT_BREAKDOWN]);
-  const [sellPrice, setSellPrice] = useState("");
-  const [totalCost, setTotalCost] = useState(0);
   const [profitLoss, setProfitLoss] = useState("");
 
   const handleBreakdownChange = (index, field, value) => {

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Build from "./Build";
 import BuildOptions from "./BuildOptions";
-import { getTimeDifferenceString } from "../helpers/epoch";
 import AddBuild from "./AddBuild";
 
 function BuildsHeader({
@@ -143,6 +142,7 @@ export default function Builds({ builds, setBuilds }) {
       <AddBuild
         showModal={showAddBuildModal}
         setShowModal={setShowAddBuildModal}
+        setBuilds={setBuilds}
       />
       <div className="flex flex-col gap-5 justify-center items-center">
         <BuildsHeader

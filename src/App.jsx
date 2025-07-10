@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Analytics from "./components/Analytics";
 import Builds from "./components/Builds";
-import { getTimeDifferenceString } from "./helpers/epoch";
 import { calculateAverageTimeToSell, createBuild } from "./helpers/build";
 
 const testBuild = {
@@ -84,6 +83,10 @@ function App() {
 
     setBuilds(initialBuilds);
   }, []);
+
+  useEffect(() => {
+    console.log("Builds updated");
+  }, [builds]);
 
   return (
     <div className="app flex flex-col bg-gray-200 w-full h-full">

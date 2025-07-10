@@ -38,6 +38,7 @@ export default function AddBuild({ showModal, setShowModal }) {
       >
         <div className="flex flex-col md:flex-row w-full gap-4">
           <FloatingLabelInput
+            label="Title"
             value={titleInput}
             onChange={(e) => setTitleInput(e.target.value)}
             id="title"

@@ -127,9 +127,15 @@ export default function AddBuild({ showModal, setShowModal, setBuilds }) {
           </div>
         </div>
 
-        <div className="w-full">
+        <div className="w-full flex gap-2">
           <button onClick={() => addBuild()} className="btn btn-primary-2">
             Add Build
+          </button>
+          <button
+            onClick={() => setShowModal(false)}
+            className="btn btn-primary"
+          >
+            Close
           </button>
         </div>
       </div>

@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import Build from "./Build";
 import BuildOptions from "./BuildOptions";
 import AddBuild from "./AddBuild";
+import { IoAddCircleOutline } from "react-icons/io5";
+import { IoListSharp } from "react-icons/io5";
+import { IoGrid } from "react-icons/io5";
+import { CiSearch } from "react-icons/ci";
 
 function BuildsHeader({
   searchInput,
@@ -25,7 +29,7 @@ function BuildsHeader({
                 listView ? "btn-primary-2" : "btn-primary"
               }`}
             >
-              List
+              <IoListSharp size="1.5em" />
             </button>
             <button
               onClick={() => setListView(false)}
@@ -33,7 +37,7 @@ function BuildsHeader({
                 listView ? "btn-primary" : "btn-primary-2"
               }`}
             >
-              Grid
+              <IoGrid size="1.3em" />
             </button>
           </div>
         )}
@@ -41,9 +45,10 @@ function BuildsHeader({
           onClick={() => setShowAddBuildModal(true)}
           className={`add-build btn btn-primary-2`}
         >
-          Add Build
+          <IoAddCircleOutline size="1.5em" />
         </button>
-        <div className="flex search-bar bg-gray-200 rounded-full p-2">
+        <div className="flex items-center search-bar bg-gray-200 rounded-full p-2">
+          <CiSearch />
           <input
             onChange={(e) => setSearchInput(e.target.value)}
             className="search-builds"

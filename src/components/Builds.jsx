@@ -10,6 +10,7 @@ function BuildsHeader({
   listView,
   setListView,
   windowWidth,
+  setShowAddBuildModal,
 }) {
   return (
     <div
@@ -37,7 +38,12 @@ function BuildsHeader({
             </button>
           </div>
         )}
-        <button className={`add-build btn btn-primary-2`}>Add Build</button>
+        <button
+          onClick={() => setShowAddBuildModal(true)}
+          className={`add-build btn btn-primary-2`}
+        >
+          Add Build
+        </button>
         <div className="flex search-bar bg-gray-200 rounded-full p-2">
           <input
             onChange={(e) => setSearchInput(e.target.value)}
@@ -97,6 +103,7 @@ export default function Builds({ builds, setBuilds }) {
   const [searchInput, setSearchInput] = useState("");
 
   const [showMoreModal, setShowMoreModal] = useState(false);
+  const [showAddBuildModal, setShowAddBuildModal] = useState(false);
   const [targetBuild, setTargetBuild] = useState(null);
 
   const { windowWidth, windowHeight } = useWindowSize();
@@ -133,7 +140,10 @@ export default function Builds({ builds, setBuilds }) {
       {showMoreModal && (
         <MoreModal setShowModal={setShowMoreModal} targetBuild={targetBuild} />
       )}
-      <AddBuild />
+      <AddBuild
+        showModal={showAddBuildModal}
+        setShowModal={setShowAddBuildModal}
+      />
       <div className="flex flex-col gap-5 justify-center items-center">
         <BuildsHeader
           searchInput={searchInput}
@@ -141,6 +151,7 @@ export default function Builds({ builds, setBuilds }) {
           listView={listView}
           setListView={setListView}
           windowWidth={windowWidth}
+          setShowAddBuildModal={setShowAddBuildModal}
         />
 
         <div className={`builds ${listView ? listViewStyle : gridViewStyle}`}>

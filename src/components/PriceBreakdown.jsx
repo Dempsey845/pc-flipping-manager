@@ -64,12 +64,12 @@ export default function PriceBreakdown() {
   return (
     <>
       <div className="flex items-center gap-4">
-        <span>Price breakdown:</span>
+        <span className="text-lg">Price breakdown:</span>
         <Toggle
           value={isEnabled}
           onChange={setIsEnabled}
-          labelOn="Yes"
-          labelOff="No"
+          labelOn=""
+          labelOff=""
         />
       </div>
       {isEnabled && (

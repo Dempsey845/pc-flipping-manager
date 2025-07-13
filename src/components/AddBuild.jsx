@@ -37,7 +37,7 @@ export default function AddBuild({ showModal, setShowModal, setBuilds }) {
   const addBuild = () => {
     console.log(selectedStatus);
     const buildData = {
-      id: 72,
+      id: Math.random() * 1000,
       title: titleInput,
       price: totalCost,
       status: selectedStatus,
@@ -103,28 +103,33 @@ export default function AddBuild({ showModal, setShowModal, setBuilds }) {
         </div>
 
         <div className="flex flex-col md:flex-row gap-4 w-full">
-          <div className="flex-1">
-            <label className="block text-sm text-gray-700 mb-1">
-              List Date & Time
-            </label>
-            <input
-              type="datetime-local"
-              value={listDateTime}
-              onChange={(e) => setListDateTime(e.target.value)}
-              className="w-full border px-3 py-2 rounded-lg shadow-sm"
-            />
-          </div>
-          <div className="flex-1">
-            <label className="block text-sm text-gray-700 mb-1">
-              Sold Date & Time
-            </label>
-            <input
-              type="datetime-local"
-              value={soldDateTime}
-              onChange={(e) => setSoldDateTime(e.target.value)}
-              className="w-full border px-3 py-2 rounded-lg shadow-sm"
-            />
-          </div>
+          {(selectedStatus == "For sale" || selectedStatus == "Sold") && (
+            <div className="flex-1">
+              <label className="block text-sm text-gray-700 mb-1">
+                List Date & Time
+              </label>
+              <input
+                type="datetime-local"
+                value={listDateTime}
+                onChange={(e) => setListDateTime(e.target.value)}
+                className="w-full border px-3 py-2 rounded-lg shadow-sm"
+              />
+            </div>
+          )}
+
+          {selectedStatus === "Sold" && (
+            <div className="flex-1">
+              <label className="block text-sm text-gray-700 mb-1">
+                Sold Date & Time
+              </label>
+              <input
+                type="datetime-local"
+                value={soldDateTime}
+                onChange={(e) => setSoldDateTime(e.target.value)}
+                className="w-full border px-3 py-2 rounded-lg shadow-sm"
+              />
+            </div>
+          )}
         </div>
 
         <div className="w-full flex gap-2">

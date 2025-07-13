@@ -20,7 +20,7 @@ function BuildsHeader({
       className={`builds-header flex w-full justify-between bg-white p-3 items-center rounded-lg`}
     >
       <h1 className="font-bold pr-5">Your builds</h1>
-      <div className="flex right-side">
+      <div className="flex gap-3 right-side">
         {windowWidth >= 640 && (
           <div className="flex gap-2 mx-2">
             <button
@@ -47,16 +47,22 @@ function BuildsHeader({
         >
           <IoAddCircleOutline size="1.5em" />
         </button>
-        <div className="flex items-center search-bar bg-gray-200 rounded-full p-2">
-          <CiSearch />
-          <input
-            onChange={(e) => setSearchInput(e.target.value)}
-            className="search-builds"
-            type="text"
-            placeholder="Search your builds"
-            value={searchInput}
-          />
-        </div>
+        {windowWidth >= 640 ? (
+          <div className="flex items-center search-bar bg-gray-200 rounded-full p-2">
+            <CiSearch />
+            <input
+              onChange={(e) => setSearchInput(e.target.value)}
+              className="search-builds"
+              type="text"
+              placeholder="Search your builds"
+              value={searchInput}
+            />
+          </div>
+        ) : (
+          <button className="flex btn btn-secondary items-center p-2">
+            <CiSearch />
+          </button>
+        )}
       </div>
     </div>
   );
